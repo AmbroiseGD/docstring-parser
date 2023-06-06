@@ -4,8 +4,6 @@ import re
 import warnings
 from sphinx_needs.api import add_need
 from sphinx.util.docutils import SphinxDirective
-from sphinx.util import logging
-from importlib import metadata
 
 
 class docstrings_parser(SphinxDirective):
@@ -121,5 +119,3 @@ class docstrings_parser(SphinxDirective):
                 else:
                     self.walkthrough_folder(folder_path)
         return self.main_section
-
-

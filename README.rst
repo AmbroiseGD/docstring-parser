@@ -6,10 +6,10 @@ sphinxcontrib-docstring-parser
 |badge:black| |badge:prettier|
 
 .. |badge:pypi-version| image:: https://img.shields.io/pypi/v/sphinxcontrib-docstring-parser.svg
-   :target: https://pypi.org/project/sphinxcontrib-docstring-parser
+   :target: https://github.com/AmbroiseGD/docstring-parser
    :alt: [Latest PyPI version]
 .. |badge:py-versions| image:: https://img.shields.io/pypi/pyversions/sphinxcontrib-docstring-parser.svg
-   :target: https://pypi.org/project/sphinxcontrib-docstring-parser
+   :target: https://github.com/AmbroiseGD/docstring-parser
    :alt: [Supported Python versions]
 .. |badge:pre-commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen.svg?logo=pre-commit&logoColor=white
    :target: https://github.com/pre-commit/pre-commit
