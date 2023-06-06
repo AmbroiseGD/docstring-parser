@@ -1,0 +1,55 @@
+name: Test and Publish Python 🐍 distributions 📦 to Test PyPI
+
+on: [push, pull_request, workflow_dispatch]
+  
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["pypy3.8", "3.8", "3.9", "3.10", "3.11", "3.12-dev"]
+        os: [windows-latest, macos-latest, ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: docs/requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install -r docs/requirements.txt
+          python -m pip install -U pytest
+          python -m pip install -e .
+
+      - name: Test
+        run: |
+          pytest
+          
+  build-n-publish:
+    name: upload release to PyPI
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags')
+    permissions:
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+      - name: install build
+        run: python -m pip install --upgrade build
+      - name: build 
+        run: python -m build
+      - name: Publish distribution 📦 to Test PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          repository-url: https://test.pypi.org/legacy/
